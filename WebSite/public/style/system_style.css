@@ -7,3 +7,7 @@
     padding: 1rem;
     border-right: solid 1px;
 }
+
+.danger {
+    color: #960000;
+}

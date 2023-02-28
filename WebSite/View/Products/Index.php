@@ -57,7 +57,7 @@ class Index implements View
         <h5>Novo produto</h5>
         <form>
             <label for="name">Descrição
-                <input type="text" id="name" name="name" />
+                <input type="text" id="name" name="name" autocomplete="off" />
             </label>
             <label for="name">Descrição
                 <select>

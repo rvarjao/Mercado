@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="style/system_style.css">
 
     <?= $scripts ?>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+
 </head>
 
 <body>
@@ -41,7 +43,7 @@
                         <a href="#" class="nav-link" onclick="loadView('sales/index')">Vendas</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" onclick="loadView('productsTypes/index')">Tipos de Produtos</a>
+                        <a href="#" class="nav-link" onclick="ProductTypeView.init()">Tipos de Produtos</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link" onclick="loadView('products/index')">Produtos</a>

@@ -17,6 +17,12 @@ class TableRow implements View
                 <td>
                     {$data['name']}
                 </td>
+                <td>
+                    <a href="#edit" data-target="modal-newProductType" onclick="">
+                        <i class="fa-solid fa-pen-to-square danger"></i>
+                    </a>
+                    <a href="#delete" onclick=""><i class="fa-solid fa-trash"></i></a>
+                </td>
             </tr>
 HTML;
     }

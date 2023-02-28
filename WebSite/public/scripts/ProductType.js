@@ -1,49 +1,52 @@
+"use strict";
+
 class ProductType {
 
-    constructor(productType = {id: 0, name: ''}) {
+    constructor(productType = { id: 0, name: '' }) {
         this.id = productType.id ?? 0;
         this.name = productType.name ?? '';
     }
 
-    save () {
+    save() {
         const url = `controllers/product_type.php`;
         const data = new FormData();
         data.append('id', this.id);
         data.append('name', this.name);
         data.append('description', this.description);
-        fetch(url, {
+        return fetch(url, {
             method: 'POST',
             body: data
-        }).then( response => response.json() )
-        .then( data => {
-            const event = new Event('click');
-            event.target = document.querySelectorAll('modal-newProductType')[0];
-            dispatchEvent(event);
-            toggleModal(event);
+        }).then(response => response.json())
+    }
 
-            if (data.success === 'success') {
+}
+
+class ProductTypeView {
+    static init() {
+        loadView('productsTypes/index').
+            then(() => {
+                ;
+                const form = document.getElementById('formProductType');
+                form.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    ProductType.submitForm(event);
+                })
+            });
+
+    }
+
+    static saveProductType() {
+        const form = document.getElementById('formProductType');
+        const name = form.querySelector('input[name="name"]').value;
+        const productType = new ProductType({ name: name });
+        productType.save().then((data) => {
+            if (data.success === true) {
+                const modal = document.getElementById('modal-newProductType');
+                closeModal(modal);
                 System.loadView('productsTypes/index');
             } else {
                 alert('Erro ao salvar o tipo de produto');
             }
-
         });
     }
-
-    static submitForm(event) {
-        const name = document.getElementById('name').value;
-        const productType = new ProductType({name: name});
-        productType.save();
-        toggleModal(event);
-    }
-
-    static initScreen() {
-        const form = document.getElementById('formProductType');
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            ProductType.submitForm(event);
-        });
-    }
-
-
 }

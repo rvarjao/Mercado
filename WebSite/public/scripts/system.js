@@ -29,7 +29,7 @@ class System {
 
 
 function loadView(view) {
-    System.loadView(view).then((html) => {
+    return System.loadView(view).then((html) => {
         document.getElementById('viewContent').innerHTML = html;
-    });
+    })
 }

@@ -53,19 +53,21 @@ class Index implements View
     <h5>Novo tipo de produto</h5>
     <form id="formProductType">
         <label for="name">Descrição
-            <input type="text" id="name" name="name" />
+            <input type="text" id="name" name="name" autocomplete="off" />
         </label>
     </form>
     <footer>
     <a href="#cancel"
         role="button"
         class="secondary"
-        data-target="modal-newProductType">
-        Cancel
+        data-target="modal-newProductType"
+        onClick="toggleModal(event)">
+        Cancelar
     </a>
     <a href="#confirm"
         role="button"
-        data-target="modal-newProductType">
+        data-target="modal-newProductType"
+        onClick="ProductTypeView.saveProductType(event)">
         Salvar
     </a>
     </footer>
