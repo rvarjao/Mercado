@@ -7,7 +7,7 @@ class System {
 
     }
 
-    static getView(view) {
+    static loadView(view) {
 
         return new Promise((resolve, reject) => {
             const url = `controllers/views.php`;
@@ -29,7 +29,7 @@ class System {
 
 
 function loadView(view) {
-    System.getView(view).then((html) => {
+    System.loadView(view).then((html) => {
         document.getElementById('viewContent').innerHTML = html;
     });
 }

@@ -1,3 +1,14 @@
+<?php
+    $scriptsToLoad = [];
+    $scriptsFolder = scandir("scripts");
+    foreach ($scriptsFolder as $script) {
+        if (strpos($script, ".js") !== false) {
+            $scriptsToLoad[] = "<script src='scripts/$script'></script>";
+        }
+    }
+    $scripts = implode("", $scriptsToLoad);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +22,7 @@
     <link rel="stylesheet" href="style/bootstrap-grid/css/pico-bootstrap-grid.min.css">
     <link rel="stylesheet" href="style/system_style.css">
 
-    <script src="scripts/system.js"></script>
+    <?= $scripts ?>
 </head>
 
 <body>

@@ -1,0 +1,5 @@
+class ProductType {
+    static addRow() {
+        
+    }
+}
