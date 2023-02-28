@@ -19,7 +19,7 @@ Requisitos do sistema
 
    1. O sistema deverá ter uma tela para listar os produtos cadastrados
    2. O sistema deverá ter uma tela para cadastrar um novo produto
-   3. A tela de produtos cadastrados deverá ter uma tabela com as colunas: Descrição, Tipo, Valor (R$), (Coluna de ação)
+   3. A tela de produtos cadastrados deverá ter uma tabela com as colunas: Descrição, Tipo, (Coluna de ação)
    4. A tela de de produtos deverá ter um botão **Cadastrar novo produto**
    5. A tela de cadastro de produto deverá ter os campos:
       - Seleção do tipo de produto
