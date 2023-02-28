@@ -15,11 +15,11 @@ class Index implements View
             $trs .= $tr->render($product);
         }
 
-        $optionsProdutos = "";
-        $optionsProdutos .= "<option value=''>Selecione</option>";
-        $optionsProdutos .= "<option value='1'>Produto 1</option>";
-        $optionsProdutos .= "<option value='2'>Produto 2</option>";
-        $optionsProdutos .= "<option value='3'>Produto 3</option>";
+        $optionsProducts = "";
+        $optionsProducts .= "<option value=''>Selecione</option>";
+        $optionsProducts .= "<option value='1'>Produto 1</option>";
+        $optionsProducts .= "<option value='2'>Produto 2</option>";
+        $optionsProducts .= "<option value='3'>Produto 3</option>";
 
 
 
@@ -63,7 +63,7 @@ class Index implements View
             </label>
             <label for="name">Descrição
                 <select>
-                    $optionsProdutos
+                    $optionsProducts
                 </select>
             </label>
 
