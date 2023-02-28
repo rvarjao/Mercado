@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.2.1/css/pico.min.css" />
     <link rel="stylesheet" href="style/bootstrap-grid/css/pico-bootstrap-grid.min.css">
     <link rel="stylesheet" href="style/system_style.css">
+
+    <script src="scripts/system.js"></script>
 </head>
 
 <body>
@@ -25,19 +27,19 @@
             <aside class="col-md-2 sydebar">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Vendas</a>
-                    </li>
-                    <li>
-                    <a href="#" class="nav-link">Tipos de Produtos</a>
+                        <a href="#" class="nav-link" onclick="loadView('sales/index')">Vendas</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Produtos</a>
+                        <a href="#" class="nav-link" onclick="loadView('productsTypes/index')">Tipos de Produtos</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Preços</a>
+                        <a href="#" class="nav-link" onclick="loadView('products/index')">Produtos</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Impostos</a>
+                        <a href="#" class="nav-link" onclick="loadView('prices/index')">Preços</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" onclick="loadView('taxes/index')">Impostos</a>
                     </li>
                 </ul>
             </aside>
