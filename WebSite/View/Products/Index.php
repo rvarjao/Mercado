@@ -21,8 +21,6 @@ class Index implements View
         $optionsProducts .= "<option value='2'>Produto 2</option>";
         $optionsProducts .= "<option value='3'>Produto 3</option>";
 
-
-
         return <<<HTML
 <section>
     <h1>Tipos de Produtos</h1>

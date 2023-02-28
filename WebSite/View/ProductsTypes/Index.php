@@ -2,15 +2,18 @@
 
 namespace View\ProductsTypes;
 
+use Model\Market\ProductType;
 use View\View;
 
 class Index implements View
 {
     public function render($data = null): string
     {
-        $data = $data ?? [];
-        $trs = "";
-        foreach ($data as $productType) {
+
+        $productsTypes = ProductType::findAll();
+        $trs = '';
+
+        foreach ($productsTypes as $productType) {
             $tr = new TableRow();
             $trs .= $tr->render($productType);
         }
@@ -48,28 +51,27 @@ class Index implements View
     onClick="toggleModal(event)">
     </a>
     <h5>Novo tipo de produto</h5>
-    <form>
-        <label for="productType">Descrição
-            <input type="text" id="productType" name="productType" />
+    <form id="formProductType">
+        <label for="name">Descrição
+            <input type="text" id="name" name="name" />
         </label>
     </form>
     <footer>
     <a href="#cancel"
         role="button"
         class="secondary"
-        data-target="modal-newProductType"
-        onClick="toggleModal(event)">
+        data-target="modal-newProductType">
         Cancel
     </a>
     <a href="#confirm"
         role="button"
-        data-target="modal-newProductType"
-        onClick="ProductType.create()">
+        data-target="modal-newProductType">
         Salvar
     </a>
     </footer>
 </article>
 </dialog>
+
 
 HTML;
     }

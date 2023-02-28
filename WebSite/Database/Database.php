@@ -5,11 +5,13 @@ namespace Database;
 use PDO;
 use PDOException;
 
-class Database {
+class Database
+{
 
     private $conn;
 
-    public function __construct() {
+    public function __construct()
+    {
         $settings = require_once __DIR__ . "/../settings/settings.php";
 
         if (!isset($settings['DATABASE'])) {
@@ -34,7 +36,17 @@ class Database {
         }
     }
 
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->conn;
+    }
+
+    public static function getInstance()
+    {
+        static $instance = null;
+        if ($instance === null) {
+            $instance = new static();
+        }
+        return $instance;
     }
 }
