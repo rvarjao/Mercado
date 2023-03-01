@@ -12,7 +12,7 @@ class Index implements View
     public function render($data = null): string
     {
 
-        $prices = ProductPrice::getCurrentPrice();
+        $prices = ProductPrice::findCurrentPrice();
         $trs = '';
         foreach ($prices as $price) {
             $tr = new TableRow();

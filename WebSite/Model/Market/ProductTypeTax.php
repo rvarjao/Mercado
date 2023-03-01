@@ -82,9 +82,10 @@ class ProductTypeTax implements ModelInterface
         // TODO: Implement findAll() method.
     }
 
-    public static function findCurrentTax($id = null)
+    public static function findCurrentTax($productTypeId = null)
     {
-        $whereProductId = $id ? "AND product_type_id = $id" : '';
+        $whereProductId = $productTypeId ? "AND product_type_id = :productTypeId" : '';
+        $parameters = $productTypeId ? [':productTypeId' => $productTypeId] : [];
 
         $query =
             "WITH t AS (
@@ -117,8 +118,23 @@ class ProductTypeTax implements ModelInterface
         $database = new Database();
         $db = $database->getConnection();
         $stmt = $db->prepare($query);
-        $stmt->execute();
+        $stmt->execute($parameters);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function loadCurrentTax($productTypeId)
+    {
+        $taxes = ProductTypeTax::findCurrentTax($productTypeId);
+        if (!$taxes || empty($taxes)) {
+            return null;
+        }
+        $tax = $taxes[0];
+        $taxModel = new ProductTypeTax((new Database())->getConnection());
+        $taxModel->id = $tax['id'];
+        $taxModel->product_type_id = $tax['product_type_id'];
+        $taxModel->tax = $tax['tax'];
+        $taxModel->created_at = $tax['created_at'];
+        return $taxModel;
     }
 
     public static function where($where, $params = [])

@@ -24,3 +24,17 @@ if ($method == 'POST') {
     echo json_encode(['success' => true, 'message' => 'Produto salvo com sucesso']);
 
 }
+
+if ($method == 'GET') {
+    $id = $_GET['id'] ?? null;
+    if (!$id) {
+        echo json_encode(['success' => false, 'message' => 'ID não informado']);
+        exit;
+    }
+
+    $product = Product::load($id);
+    $product->loadProductPrice();
+    $product->loadProductTypeTax();
+
+    echo json_encode($product);
+}

@@ -7,12 +7,22 @@ use View\View;
 
 class AvailableProductsForSale implements View
 {
+    public $showLabel = true;
+
     public function render($data = null): string
     {
         $products = Product::findAvailableProductsForSale();
         $optionsProducts = "<option>Selecione um produto</option>";
         foreach ($products as $product) {
             $optionsProducts .= "<option value='{$product['id']}'>{$product['name']}</option>";
+        }
+
+        if (!$this->showLabel) {
+            return <<<HTML
+            <select name="productId" >
+                $optionsProducts
+            </select>
+HTML;
         }
 
         return <<<HTML

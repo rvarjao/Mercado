@@ -82,9 +82,10 @@ class ProductPrice implements ModelInterface
         // TODO: Implement findAll() method.
     }
 
-    public static function getCurrentPrice($id = null)
+    public static function findCurrentPrice($id = null)
     {
-        $whereProductId = $id ? "AND product_id = $id" : '';
+        $whereProductId = $id ? "AND product_id = :product_id" : '';
+        $parameters = $id ? ["product_id" => $id] : [];
 
         $query =
             "WITH t AS (
@@ -122,13 +123,28 @@ class ProductPrice implements ModelInterface
         $database = new Database();
         $db = $database->getConnection();
         $stmt = $db->prepare($query);
-        $stmt->execute();
+        $stmt->execute($parameters);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public static function where($where, $params = [])
     {
         // TODO: Implement where() method.
+    }
+
+    public static function loadCurrentPrice($productId)
+    {
+        $price = ProductPrice::findCurrentPrice($productId);
+        if (!$price || empty($price)) {
+            return null;
+        }
+        $price = $price[0];
+        $priceModel = new ProductPrice((new Database())->getConnection());
+        $priceModel->id = $price['id'];
+        $priceModel->product_id = $price['product_id'];
+        $priceModel->price = $price['price'];
+        $priceModel->created_at = $price['created_at'];
+        return $priceModel;
     }
 
 }

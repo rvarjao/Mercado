@@ -21,27 +21,42 @@ class Sale implements View
 
 		$salesProducts = $sale->getSaleItems();
 		$trs = "";
+		foreach ($salesProducts as $saleProduct) {
+			$tableRow = new TableRow($saleProduct);
+			$trs .= $tableRow->render();
+		}
 
 
         return <<<HTML
 	<h1>Venda</h1>
-	<table>
-		<thead>
-			<tr>
-				<th hidden>ID</th>
-				<th>Product</th>
-				<th>Quantity</th>
-				<th>Unit Price</th>
-				<th>Tax (%)</th>
-				<th>Tax ($)</th>
-				<th>Total</th>
-			</tr>
-		</thead>
-		<tbody id="tbody">
-			$trs
-		</tbody>
-	</table><br>
-	<button onclick="SaleView.addRow(event)">Add Row</button>
+	<figure>
+		<table id="tableSaleProducts" role="grid" style="min-width:70rem;">
+			<thead>
+				<tr>
+					<th hidden>ID</th>
+					<th>Produto</th>
+					<th>Quantidade</th>
+					<th>Valor unitário (R$)</th>
+					<th>Imposto (%)</th>
+					<th>Imposto (R$)</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<form id="formSaleProducts">
+				<tbody id="tbody">
+					$trs
+				</tbody>
+			</form>
+			<tfoot>
+				<tr>
+					<td colspan="6">Total</td>
+					<td id="total">0</td>
+				</tr>
+			</tfoot>
+		</table>
+	</figure>
+	<br>
+	<button onclick="SaleView.addRow(event)">Adicionar produto</button>
 HTML;
     }
 }

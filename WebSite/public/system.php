@@ -40,7 +40,7 @@ $scripts = implode("", $scriptsToLoad);
         </ul>
     </nav>
 
-    <main class="container">
+    <main class="container-fluid">
         <!-- Sidebar -->
         <aside>
             <details open=true>
