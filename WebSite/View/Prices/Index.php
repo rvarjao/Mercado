@@ -3,27 +3,30 @@
 namespace View\Prices;
 
 use View\View;
+use Model\Market\ProductPrice;
+use View\Selects\Products;
+use View\Selects\ProductTypes;
 
 class Index implements View
 {
     public function render($data = null): string
     {
-        $trs = "";
-        $data = [];
-        foreach ($data as $price) {
+
+        $prices = ProductPrice::getCurrentPrice();
+        $trs = '';
+        foreach ($prices as $price) {
             $tr = new TableRow();
             $trs .= $tr->render($price);
         }
 
-        $optionsProducts = "";
-        $optionsProducts .= "<option value=''>Selecione</option>";
-        $optionsProducts .= "<option value='1'>Produto 1</option>";
-        $optionsProducts .= "<option value='2'>Produto 2</option>";
-        $optionsProducts .= "<option value='3'>Produto 3</option>";
+        $viewProductTypes = new Products();
+        $selectProducts = $viewProductTypes->render();
 
         return <<<HTML
         <section>
             <h1>Preços dos produtos</h1>
+            <a role="button" href=# data-target="modal-newProduct"
+                    onclick="toggleModal(event)">Novo preço</a>
             <table id="productTypes" role="grid">
                 <thead>
                     <tr>
@@ -38,10 +41,6 @@ class Index implements View
                     $trs
                 </tbody>
             </table>
-            <div class="grid">
-                <button data-target="modal-newProduct"
-                    onclick="toggleModal(event)">Novo produto</button>
-            </div>
         </section>
 
 
@@ -49,38 +48,33 @@ class Index implements View
 <dialog id="modal-newProduct">
     <article style="min-width:20rem">
         <a href="#close"
-        aria-label="Close"
-        class="close"
-        data-target="modal-newProduct"
-        onClick="toggleModal(event)">
+            aria-label="Close"
+            class="close"
+            data-target="modal-newProduct"
+            onClick="toggleModal(event)">
         </a>
         <h5>Novo preço de produto</h5>
         <form>
-            <label for="type">Tipo
-                <select name="type" id="type">
-                    $optionsProducts
-                </select>
+            $selectProducts
+            <label for="price">Valor (R$)
+                <input type="number" id="price" name="price" step="0.01"/>
             </label>
-            <label for="value">Valor (R$)
-                <input type="number" id="value" name="value" step="0.01"/>
-            </label>
-
+            <footer>
+                <a href="#cancel"
+                    role="button"
+                    class="secondary"
+                    data-target="modal-newProduct"
+                    onClick="toggleModal(event)">
+                    Cancel
+                </a>
+                <a href="#confirm"
+                    role="button"
+                    data-target="modal-newProduct"
+                    onClick="ProductPriceView.savePrice(event)">
+                    Salvar
+                </a>
+            </footer>
         </form>
-    <footer>
-        <a href="#cancel"
-            role="button"
-            class="secondary"
-            data-target="modal-newProduct"
-            onClick="toggleModal(event)">
-            Cancel
-        </a>
-        <a href="#confirm"
-            role="button"
-            data-target="modal-newProduct"
-            onClick="Product.create()">
-            Salvar
-        </a>
-    </footer>
     </article>
 </dialog>
 

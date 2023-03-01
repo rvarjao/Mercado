@@ -4,8 +4,8 @@ namespace View\Products;
 
 use Model\Market\Product;
 use Model\Market\ProductType;
+use View\Selects\ProductTypes;
 use View\View;
-use PDO;
 
 class Index implements View
 {
@@ -18,11 +18,8 @@ class Index implements View
             $trs .= (new TableRow())->render($product);
         }
 
-        $productTypes = ProductType::findAll();
-        $optionsProducts = "<option>Selecione um tipo de produto</option>";
-        foreach ($productTypes as $productType) {
-            $optionsProducts .= "<option value='{$productType['id']}'>{$productType['name']}</option>";
-        }
+        $viewProductTypes = new ProductTypes();
+        $selectProductTypes = $viewProductTypes->render();
 
         return <<<HTML
 <section>
@@ -60,12 +57,7 @@ class Index implements View
             <label for="name">Descrição
                 <input type="text" id="name" name="name" autocomplete="off" />
             </label>
-            <label for="productTypeId">Tipo do produto
-                <select name="productTypeId" >
-                    $optionsProducts
-                </select>
-            </label>
-
+            $selectProductTypes
             <footer>
             <a href="#cancel"
                 role="button"

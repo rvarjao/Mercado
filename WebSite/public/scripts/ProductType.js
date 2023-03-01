@@ -23,7 +23,7 @@ class ProductType {
 
 class ProductTypeView {
     static init() {
-        loadView('productsTypes/index').
+        loadView('productTypes/index').
             then(() => {
                 ;
                 const form = document.getElementById('formProductType');
@@ -43,7 +43,7 @@ class ProductTypeView {
             if (data.success === true) {
                 const modal = document.getElementById('modal-newProductType');
                 closeModal(modal);
-                System.loadView('productsTypes/index');
+                System.loadView('productTypes/index');
             } else {
                 alert('Erro ao salvar o tipo de produto');
             }

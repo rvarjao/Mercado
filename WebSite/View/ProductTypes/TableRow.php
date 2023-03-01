@@ -1,6 +1,6 @@
 <?php
 
-namespace View\ProductsTypes;
+namespace View\ProductTypes;
 
 use View\View;
 

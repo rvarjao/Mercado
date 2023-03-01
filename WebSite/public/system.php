@@ -55,20 +55,20 @@ $scripts = implode("", $scriptsToLoad);
                     </li>
                 </ul>
             </details>
-            <details>
+            <details open=true>
                 <summary>Configuração</summary>
                 <ul>
                     <li>
                         <a href="#" class="nav-link" onclick="ProductTypeView.init()">Tipos de Produtos</a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link" onclick="loadView('products/index')">Produtos</a>
+                        <a href="#" class="nav-link" onclick="ProductView.init()">Produtos</a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link" onclick="loadView('prices/index')">Preços</a>
+                        <a href="#" class="nav-link" onclick="ProductPriceView.init()">Preços</a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link" onclick="loadView('taxes/index')">Impostos</a>
+                        <a href="#" class="nav-link" onclick="TaxesView.init()">Impostos</a>
                     </li>
                 </ul>
             </details>

@@ -1,6 +1,6 @@
 <?php
 
-namespace View\ProductsTypes;
+namespace View\ProductTypes;
 
 use Model\Market\ProductType;
 use View\View;
@@ -10,10 +10,10 @@ class Index implements View
     public function render($data = null): string
     {
 
-        $productsTypes = ProductType::findAll();
+        $productTypes = ProductType::findAll();
         $trs = '';
 
-        foreach ($productsTypes as $productType) {
+        foreach ($productTypes as $productType) {
             $tr = new TableRow();
             $trs .= $tr->render($productType);
         }
