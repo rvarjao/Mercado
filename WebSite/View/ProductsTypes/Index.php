@@ -22,6 +22,8 @@ class Index implements View
 
 <section>
     <h1>Tipos de Produtos</h1>
+        <a href=# role="button" data-target="modal-newProductType"
+            onclick="toggleModal(event)">Novo tipo de produto</a>
     <table id="productTypes" role="grid">
         <thead>
             <tr>
@@ -34,10 +36,6 @@ class Index implements View
             $trs
         </tbody>
     </table>
-    <div class="grid">
-        <button data-target="modal-newProductType"
-            onclick="toggleModal(event)">Novo tipo de produto</button>
-    </div>
 </section>
 
 
