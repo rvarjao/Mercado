@@ -54,6 +54,9 @@ Requisitos do sistema
    10. A tela de vendas deverá apresentar o valor total da venda
    11. O campo de seleção do item deverá trazer apenas os itens que tenham valor cadastrado.
    12. Ao buscar o valor do item deve ser sempre considerado o horário de fechamento da venda.
+   13. O layout geral deve seguir o da imagem:
+
+   ![Layout tela de vendas](../../Projeto/Mockup/TelaVendas.png "Layout tela de vendas")
 
 
 Banco de dados

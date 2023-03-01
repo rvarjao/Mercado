@@ -19,9 +19,6 @@ class TableRow implements View
                     {$data['created_at']}
                 </td>
                 <td>
-                    {$data['name']}
-                </td>
-                <td>
                     {$data['total']}
                 </td>
             </tr>

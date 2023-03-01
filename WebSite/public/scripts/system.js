@@ -7,11 +7,11 @@ class System {
 
     }
 
-    static loadView(view) {
+    static loadView(view, formData = null) {
 
         return new Promise((resolve, reject) => {
             const url = `controllers/views.php`;
-            const data = new FormData();
+            const data = formData ?? new FormData();
             data.append('view', view);
             fetch(url, {
                 method: 'POST',
@@ -28,8 +28,8 @@ class System {
 }
 
 
-function loadView(view) {
-    return System.loadView(view).then((html) => {
+function loadView(view, formData = null) {
+    return System.loadView(view, formData).then((html) => {
         document.getElementById('viewContent').innerHTML = html;
     })
 }

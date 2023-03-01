@@ -21,7 +21,6 @@ class ProductPrice {
         this.productId = product.productId ?? 0;
         this.price = product.price ?? 0;
         this.createdAt = product.createdAt ?? '';
-        console.log(this);
     }
 
     save() {

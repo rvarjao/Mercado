@@ -43,15 +43,11 @@ $scripts = implode("", $scriptsToLoad);
     <main class="container">
         <!-- Sidebar -->
         <aside>
-            <nav class="closed-on-mobile">
-                <a href="./" class="secondary" id="toggle-docs-navigation">
-                    Conteúdo</a>
-            </nav>
             <details open=true>
                 <summary>Vendas</summary>
                 <ul>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" onclick="loadView('sales/index')">Vendas</a>
+                        <a href="#" class="nav-link" onclick="SalesView.init();">Vendas</a>
                     </li>
                 </ul>
             </details>

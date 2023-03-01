@@ -2,28 +2,29 @@
 
 namespace View\Sales;
 
+use Model\Market\Sale;
 use View\View;
 
 class Index implements View
 {
     public function render($data = null): string
     {
-        $data = $data ?? [];
+
+        $sales = Sale::findSummary();
         $trs = "";
-        foreach ($data as $product) {
+        foreach ($sales as $sale) {
             $tr = new TableRow();
-            $trs .= $tr->render($product);
+            $trs .= $tr->render($sale);
         }
 
-        $optionsProducts = "";
-        $optionsProducts .= "<option value=''>Selecione</option>";
-        $optionsProducts .= "<option value='1'>Produto 1</option>";
-        $optionsProducts .= "<option value='2'>Produto 2</option>";
-        $optionsProducts .= "<option value='3'>Produto 3</option>";
-
         return <<<HTML
+
 <section>
     <h1>Vendas</h1>
+    <a href=#
+        data-target="modal-newProduct"
+        role="button"
+        onclick="SaleView.loadNewSaleView()">Nova venda</a>
     <table id="sales" role="grid">
         <thead>
             <tr>
@@ -37,13 +38,8 @@ class Index implements View
             $trs
         </tbody>
     </table>
-    <div class="grid">
-        <button data-target="modal-newProduct"
-            onclick="">Nova venda</button>
-    </div>
 </section>
 
 HTML;
     }
 }
-

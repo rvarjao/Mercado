@@ -1,6 +1,6 @@
 "use strict";
 
-class ProductTypeTax {
+class Sale {
     static fromFormData(formData) {
         const productTypeTax = new ProductTypeTax();
         productTypeTax.id = formData.get('id');
@@ -12,7 +12,7 @@ class ProductTypeTax {
 
     constructor(product = {
         id: 0,
-        productTypeId : 0,
+        productTypeId: 0,
         tax: 0,
         createdAt: '',
     }) {
@@ -21,6 +21,7 @@ class ProductTypeTax {
         this.productTypeId = product.productTypeId ?? 0;
         this.tax = product.tax ?? 0;
         this.createdAt = product.createdAt ?? '';
+        console.log(this);
     }
 
     save() {
@@ -37,10 +38,15 @@ class ProductTypeTax {
 }
 
 
-class ProductTypeTaxView {
+class SalesView {
     static init() {
-        loadView('taxes/index');
+        loadView('sales/index');
     }
+
+    static openNewSaleView() {
+        loadView('sales/new');
+    }
+
 
     static saveTax(event) {
         const buttonTarget = event.target;
@@ -52,10 +58,30 @@ class ProductTypeTaxView {
             if (data.success === true) {
                 const modal = document.getElementById('modal-newProduct');
                 closeModal(modal);
-                loadView('taxes/index');
+                loadView('sales/index');
             } else {
                 alert('Erro ao salvar o imposto do tipo de produto');
             }
         });
     }
+
+    static loadNewSaleView() {
+        loadView('sales/detail/sale');
+    }
+
+}
+
+class SaleView {
+    static init() {
+
+    }
+
+    static loadNewSaleView() {
+        loadView('sales/detail/sale');
+    }
+
+    static addRow() {
+
+    }
+
 }

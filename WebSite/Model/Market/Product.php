@@ -111,4 +111,39 @@ class Product implements ModelInterface
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function findAvailableProductsForSale($id = null)
+    {
+        $database = new Database();
+        $connection = $database->getConnection();
+        $whereID = $id ? " AND product.id = $id" : "";
+
+        $query =
+            "SELECT
+                product.id,
+                product.name,
+                product.product_type_id,
+                product_type.name AS product_type_name
+            FROM
+                product
+            JOIN
+                product_type ON product_type.id = product.product_type_id
+            WHERE EXISTS
+                (SELECT
+                    1
+                FROM
+                    product_price
+                WHERE
+                    product_price.product_id = product.id
+                AND
+                    product_price.price > 0)
+            $whereID
+            ORDER BY product.name";
+
+        $stmt = $connection->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+    }
 }
