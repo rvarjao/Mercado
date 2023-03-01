@@ -48,7 +48,6 @@ class ProductPriceView {
         const form = buttonTarget.closest('form');
         const formData = new FormData(form);
         const productPrice = ProductPrice.fromFormData(formData);
-        console.log(productPrice);
 
         productPrice.save().then((data) => {
             if (data.success === true) {
@@ -56,7 +55,7 @@ class ProductPriceView {
                 closeModal(modal);
                 loadView('prices/index');
             } else {
-                alert('Erro ao salvar o tipo de produto');
+                alert('Erro ao salvar o preço de produto');
             }
         });
     }

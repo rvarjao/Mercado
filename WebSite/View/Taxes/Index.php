@@ -2,33 +2,33 @@
 
 namespace View\Taxes;
 
+use Model\Market\ProductTypeTax;
+use View\Selects\ProductTypes;
 use View\View;
 
 class Index implements View
 {
     public function render($data = null): string
     {
-        $trs = "";
-        $data = [];
-        foreach ($data as $price) {
-            $tr = new TableRow();
-            $trs .= $tr->render($price);
-        }
+        $productTypes = new ProductTypes();
+        $selectProductTypes = $productTypes->render();
 
-        $optionsProducts = "";
-        $optionsProducts .= "<option value=''>Selecione</option>";
-        $optionsProducts .= "<option value='1'>Produto 1</option>";
-        $optionsProducts .= "<option value='2'>Produto 2</option>";
-        $optionsProducts .= "<option value='3'>Produto 3</option>";
+        $trs = "";
+        $productTypeTaxes = ProductTypeTax::findCurrentTax();
+        foreach ($productTypeTaxes as $productTypeTax) {
+            $tr = new TableRow();
+            $trs .= $tr->render($productTypeTax);
+        }
 
         return <<<HTML
         <section>
-            <h1>Preços dos produtos</h1>
+            <h1>Impostos deduzidos nos tipos de produtos</h1>
+            <a role="button" href=# data-target="modal-newProduct"
+                    onclick="toggleModal(event)">Novo imposto do tipo de produto</a>
             <table id="productTypes" role="grid">
                 <thead>
                     <tr>
                         <th hidden>Id</th>
-                        <th>Produto</th>
                         <th>Tipo</th>
                         <th>Imposto (%)</th>
                         <th>Data inclusão</th>
@@ -38,10 +38,7 @@ class Index implements View
                     $trs
                 </tbody>
             </table>
-            <div class="grid">
-                <button data-target="modal-newProduct"
-                    onclick="toggleModal(event)">Novo produto</button>
-            </div>
+
         </section>
 
 
@@ -49,38 +46,33 @@ class Index implements View
 <dialog id="modal-newProduct">
     <article style="min-width:20rem">
         <a href="#close"
-        aria-label="Close"
-        class="close"
-        data-target="modal-newProduct"
-        onClick="toggleModal(event)">
-        </a>
-        <h5>Novo preço de produto</h5>
-        <form>
-            <label for="type">Produto
-                <select name="type" id="type">
-                    $optionsProducts
-                </select>
-            </label>
-            <label for="value">Percentagem do imposto retido (%)
-                <input type="number" id="value" name="value" step="0.01"/>
-            </label>
-
-        </form>
-    <footer>
-        <a href="#cancel"
-            role="button"
-            class="secondary"
+            aria-label="Close"
+            class="close"
             data-target="modal-newProduct"
             onClick="toggleModal(event)">
-            Cancel
-        </a>
-        <a href="#confirm"
-            role="button"
-            data-target="modal-newProduct"
-            onClick="Product.create()">
-            Salvar
-        </a>
-    </footer>
+            </a>
+        <h5>Novo imposto de tipo de produto</h5>
+        <form>
+            $selectProductTypes
+            <label for="tax">Percentagem do imposto retido (%)
+                <input type="number" id="tax" name="tax" step="0.01"/>
+            </label>
+            <footer>
+                <a href="#cancel"
+                    role="button"
+                    class="secondary"
+                    data-target="modal-newProduct"
+                    onClick="toggleModal(event)">
+                    Cancel
+                </a>
+                <a href="#confirm"
+                    role="button"
+                    data-target="modal-newProduct"
+                    onClick="ProductTypeTaxView.saveTax(event);">
+                    Salvar
+                </a>
+            </footer>
+        </form>
     </article>
 </dialog>
 

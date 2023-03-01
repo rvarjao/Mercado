@@ -12,19 +12,20 @@ class TableRow implements View
             'id' => '',
             'name' => ''
         ];
+
         return <<<HTML
-            <tr dataset-id="{$data['id']}">
-                <td>
-                    {$data['name']}
-                </td>
-                <td>
-                    {$data['type']}
-                </td>
-                <td>
-                    {$data['percentage']}
-                </td>
-                <td></td>
-            </tr>
+        <tr dataset-id="{$data['id']}">
+            <td>
+                {$data['product_type_name']}
+            </td>
+            <td>
+                {$data['tax']}
+            </td>
+            <td>
+                {$data['created_at']}
+            </td>
+            <td></td>
+        </tr>
 HTML;
     }
 }

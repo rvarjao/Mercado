@@ -68,7 +68,7 @@ $scripts = implode("", $scriptsToLoad);
                         <a href="#" class="nav-link" onclick="ProductPriceView.init()">Preços</a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link" onclick="TaxesView.init()">Impostos</a>
+                        <a href="#" class="nav-link" onclick="ProductTypeTaxView.init()">Impostos</a>
                     </li>
                 </ul>
             </details>
