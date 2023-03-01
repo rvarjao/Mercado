@@ -1,13 +1,27 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100hv;
+    padding: 0;
+}
+
 .system-navbar {
     padding: 1rem;
     border-bottom: solid 1px;
 }
 
-.sydebar {
+.sidebar {
     padding: 1rem;
     border-right: solid 1px;
+    overflow: auto;
 }
 
 .danger {
     color: #960000;
+}
+
+.h-100 {
+    height: 100%;
 }

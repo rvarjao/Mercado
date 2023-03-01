@@ -60,7 +60,7 @@ class ProductType implements ModelInterface
     {
         $database = new Database();
         $connection = $database->getConnection();
-        $query = "SELECT * FROM product_type";
+        $query = "SELECT * FROM product_type ORDER BY name";
         $stmt = $connection->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

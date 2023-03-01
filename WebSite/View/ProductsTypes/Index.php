@@ -36,7 +36,7 @@ class Index implements View
     </table>
     <div class="grid">
         <button data-target="modal-newProductType"
-            onclick="toggleModal(event)">Novo produto</button>
+            onclick="toggleModal(event)">Novo tipo de produto</button>
     </div>
 </section>
 

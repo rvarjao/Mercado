@@ -1,12 +1,12 @@
 <?php
-    $scriptsToLoad = [];
-    $scriptsFolder = scandir("scripts");
-    foreach ($scriptsFolder as $script) {
-        if (strpos($script, ".js") !== false) {
-            $scriptsToLoad[] = "<script src='scripts/$script'></script>";
-        }
+$scriptsToLoad = [];
+$scriptsFolder = scandir("scripts");
+foreach ($scriptsFolder as $script) {
+    if (strpos($script, ".js") !== false) {
+        $scriptsToLoad[] = "<script src='scripts/$script'></script>";
     }
-    $scripts = implode("", $scriptsToLoad);
+}
+$scripts = implode("", $scriptsToLoad);
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.2.1/css/pico.min.css" />
     <link rel="stylesheet" href="style/bootstrap-grid/css/pico-bootstrap-grid.min.css">
     <link rel="stylesheet" href="style/system_style.css">
+    <link rel="stylesheet" href="style/pico-docs/pico.docs.min.css">
 
     <?= $scripts ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
@@ -29,38 +30,52 @@
 
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar system-navbar">
-        <a href="#" class="navbar-brand">Mercado</a>
+    <nav class="container-fluid">
+        <ul>
+            <li>
+                <a href="#" class="navbar-brand">
+                    <img src="images/market_stand.png" alt="Logo" style="width: 3rem;margin: 0.3rem;"/>
+                </a>
+            </li>
+        </ul>
     </nav>
 
-    <!-- Main Content -->
-    <main class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <aside class="col-md-2 sydebar">
-                <ul class="nav flex-column">
+    <main class="container">
+        <!-- Sidebar -->
+        <aside>
+            <nav class="closed-on-mobile">
+                <a href="./" class="secondary" id="toggle-docs-navigation">
+                    Conteúdo</a>
+            </nav>
+            <details open=true>
+                <summary>Vendas</summary>
+                <ul>
                     <li class="nav-item">
                         <a href="#" class="nav-link" onclick="loadView('sales/index')">Vendas</a>
                     </li>
-                    <li class="nav-item">
+                </ul>
+            </details>
+            <details>
+                <summary>Configuração</summary>
+                <ul>
+                    <li>
                         <a href="#" class="nav-link" onclick="ProductTypeView.init()">Tipos de Produtos</a>
                     </li>
-                    <li class="nav-item">
+                    <li>
                         <a href="#" class="nav-link" onclick="loadView('products/index')">Produtos</a>
                     </li>
-                    <li class="nav-item">
+                    <li>
                         <a href="#" class="nav-link" onclick="loadView('prices/index')">Preços</a>
                     </li>
-                    <li class="nav-item">
+                    <li>
                         <a href="#" class="nav-link" onclick="loadView('taxes/index')">Impostos</a>
                     </li>
                 </ul>
-            </aside>
+            </details>
+        </aside>
 
-            <!-- Main Content -->
-            <main class="col-md-9" id="viewContent">
-
-            </main>
+        <!-- Main Content -->
+        <div role="document" id="viewContent">
         </div>
     </main>
 </body>
