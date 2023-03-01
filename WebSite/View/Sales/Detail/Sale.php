@@ -49,8 +49,10 @@ class Sale implements View
 			</form>
 			<tfoot>
 				<tr>
-					<td colspan="6">Total</td>
-					<td id="total">0</td>
+					<td colspan="5">Total</td>
+					<td>
+						<input type="number" value="0" name="saleTotal" id="saleTotal" disabled/>
+					</td>
 				</tr>
 			</tfoot>
 		</table>

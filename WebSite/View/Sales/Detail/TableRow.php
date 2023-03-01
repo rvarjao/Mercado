@@ -44,7 +44,7 @@ class TableRow implements View
                     <input type="hidden" value="{$productTaxId}" name="product_type_tax_id[]" readonly/>
                 </td>
                 <td>
-                    <input type="number" value="{$price}" name="product_price[]"  disabled/>
+                    <input type="number" value="{$price}" name="price[]"  disabled/>
                 </td>
                 <td>
                     <input type="number" value="{$tax}" name="product_type_tax[]" disabled/>
