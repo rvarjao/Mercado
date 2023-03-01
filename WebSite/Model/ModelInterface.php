@@ -8,4 +8,5 @@ interface ModelInterface
     public function delete();
     public static function find($id);
     public static function findAll();
+    public static function where($where, $params = []);
 }

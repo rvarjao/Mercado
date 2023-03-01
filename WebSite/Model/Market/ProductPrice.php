@@ -28,6 +28,12 @@ class Product implements ModelInterface {
 
     public static function findAll() {
 
+
+    }
+
+    public static function where($where, $params = [])
+    {
+
     }
 
 }

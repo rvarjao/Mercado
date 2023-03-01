@@ -12,7 +12,7 @@ class Database
 
     public function __construct()
     {
-        $settings = require_once __DIR__ . "/../settings/settings.php";
+        $settings = include __DIR__ . "/../settings/settings.php";
 
         if (!isset($settings['DATABASE'])) {
             die("Database settings not found");

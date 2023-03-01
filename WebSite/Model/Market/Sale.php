@@ -30,4 +30,9 @@ class Product implements ModelInterface {
 
     }
 
+    public static function where($where, $params = [])
+    {
+
+    }
+
 }

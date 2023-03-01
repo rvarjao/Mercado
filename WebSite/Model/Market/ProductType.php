@@ -65,4 +65,14 @@ class ProductType implements ModelInterface
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function where($where, $params = [])
+    {
+        $database = new Database();
+        $connection = $database->getConnection();
+        $query = "SELECT * FROM product_type WHERE $where ORDER BY name";
+        $stmt = $connection->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

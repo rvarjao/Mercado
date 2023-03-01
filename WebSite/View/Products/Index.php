@@ -2,35 +2,39 @@
 
 namespace View\Products;
 
+use Model\Market\Product;
+use Model\Market\ProductType;
 use View\View;
+use PDO;
 
 class Index implements View
 {
     public function render($data = null): string
     {
-        $data = $data ?? [];
-        $trs = "";
-        foreach ($data as $product) {
-            $tr = new TableRow();
-            $trs .= $tr->render($product);
+
+        $products = Product::findAll();
+        $trs = '';
+        foreach ($products as $product) {
+            $trs .= (new TableRow())->render($product);
         }
 
-        $optionsProducts = "";
-        $optionsProducts .= "<option value=''>Selecione</option>";
-        $optionsProducts .= "<option value='1'>Produto 1</option>";
-        $optionsProducts .= "<option value='2'>Produto 2</option>";
-        $optionsProducts .= "<option value='3'>Produto 3</option>";
+        $productTypes = ProductType::findAll();
+        $optionsProducts = "<option>Selecione um tipo de produto</option>";
+        foreach ($productTypes as $productType) {
+            $optionsProducts .= "<option value='{$productType['id']}'>{$productType['name']}</option>";
+        }
 
         return <<<HTML
 <section>
-    <h1>Tipos de Produtos</h1>
+    <h1>Produtos</h1>
+    <a href=# role="button" data-target="modal-newProduct"
+        onclick="toggleModal(event)">Novo produto</a>
     <table id="productTypes" role="grid">
         <thead>
             <tr>
                 <th hidden>Id</th>
                 <th>Descrição</th>
                 <th>Tipo</th>
-                <th>Valor (R$)</th>
                 <th></th>
             </tr>
         </thead>
@@ -38,10 +42,7 @@ class Index implements View
             $trs
         </tbody>
     </table>
-    <div class="grid">
-        <button data-target="modal-newProduct"
-            onclick="toggleModal(event)">Novo produto</button>
-    </div>
+
 </section>
 
 
@@ -59,32 +60,31 @@ class Index implements View
             <label for="name">Descrição
                 <input type="text" id="name" name="name" autocomplete="off" />
             </label>
-            <label for="name">Descrição
-                <select>
+            <label for="productTypeId">Tipo do produto
+                <select name="productTypeId" >
                     $optionsProducts
                 </select>
             </label>
 
+            <footer>
+            <a href="#cancel"
+                role="button"
+                class="secondary"
+                data-target="modal-newProduct"
+                onClick="toggleModal(event)">
+                Cancel
+            </a>
+            <a href="#confirm"
+                role="button"
+                data-target="modal-newProduct"
+                onClick="ProductView.saveProduct(event)">
+                Salvar
+            </a>
+            </footer>
         </form>
-        <footer>
-        <a href="#cancel"
-            role="button"
-            class="secondary"
-            data-target="modal-newProduct"
-            onClick="toggleModal(event)">
-            Cancel
-        </a>
-        <a href="#confirm"
-            role="button"
-            data-target="modal-newProduct"
-            onClick="Product.create()">
-            Salvar
-        </a>
-        </footer>
     </article>
 </dialog>
 
 HTML;
     }
 }
-
