@@ -33,7 +33,7 @@ $scripts = implode("", $scriptsToLoad);
     <nav class="container-fluid">
         <ul>
             <li>
-                <a href="#" class="navbar-brand">
+                <a href="index.php" class="navbar-brand">
                     <img src="images/market_stand.png" alt="Logo" style="width: 3rem;margin: 0.3rem;"/>
                 </a>
             </li>

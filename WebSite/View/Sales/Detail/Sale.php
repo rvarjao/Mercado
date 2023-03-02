@@ -21,7 +21,7 @@ class Sale implements View
 		}
 
 		$sale->loadProducts();
-		$salesProducts = $sale->products;
+		$salesProducts = $sale->products ?? [];
 
 		$trs = "";
 		foreach ($salesProducts as $saleProduct) {
