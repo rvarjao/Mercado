@@ -175,6 +175,23 @@ class SaleView {
         const total = inputsTotal.reduce((total, input) => total + parseFloat(input.value), 0);
         const inputTotal = document.getElementById('saleTotal');
         inputTotal.value = total;
+
+        const inputTotalTax = document.getElementById('saleTotalTax');
+        const inputsTotalTax = trs.map((tr) => tr.querySelector('input[name="product_type_tax_value[]"]'));
+        const totalTax = inputsTotalTax.reduce((total, input) => total + parseFloat(input.value), 0);
+        inputTotalTax.value = totalTax;
+
+        const inputTotalProducts = document.getElementById('saleTotalProducts');
+        const totalProducts = trs.reduce((total, tr) => {
+            const inputAmount = tr.querySelector('input[name="amount[]"]');
+            const inputPrice = tr.querySelector('input[name="price[]"]');
+            const amount = inputAmount.value ?? 0;
+            const price = inputPrice.value ?? 0;
+            return total + (amount * price);
+        }, 0);
+
+        inputTotalProducts.value = totalProducts;
+
     }
 
     static save() {

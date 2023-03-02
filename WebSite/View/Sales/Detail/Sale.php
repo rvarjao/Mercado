@@ -51,22 +51,48 @@ class Sale implements View
 					<tbody id="tbody">
 						$trs
 					</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="5"></td>
-						<td>Total</td>
-						<td>
-							<input type="number" value="0" name="saleTotal" id="saleTotal" disabled/>
-						</td>
-					</tr>
-				</tfoot>
 			</table>
 		</figure>
+		<div class="container">
+			<table>
+				<tbody>
+					<tr>
+						<th style="text-align:right;">
+							Produtos (R$)
+						</th>
+						<td width=25%>
+							<input type="number" value="0" name="saleTotal" id="saleTotalProducts" disabled/>
+						</td>
+						<td width=25%></td>
+					</tr>
+					<tr>
+						<th style="text-align:right;">
+							Imposto (R$)
+						</th>
+						<td width=25%>
+							<input type="number" value="0" name="saleTotal" id="saleTotalTax" disabled/>
+						</td>
+						<td width=25%></td>
+					</tr>
+					<tr>
+						<th style="text-align:right;">
+							Total (R$)
+						</th>
+						<td width=25%>
+							<input type="number" value="0" name="saleTotal" id="saleTotal" disabled style="font-weight:bold;" />
+						</td>
+						<td width=25%></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</form>
 	<footer>
 		<div class="grid">
-			<a href=# role="button" onclick="SaleView.addRow(event)" class="contrast outline">Adicionar produto</a>
-			<a href=# role="button" onclick="SaleView.save(event)">Salvar venda</a>
+			<a href=# role="button" onclick="SaleView.addRow(event)" class="contrast outline">
+				<i class="fa-solid fa-plus"></i><span style="margin-left:0.5rem;">Adicionar produto</span></a>
+			<a href=# role="button" onclick="SaleView.save(event)">
+				<i class="fa-solid fa-floppy-disk"></i><span style="margin-left:0.5rem;">Salvar venda</span></a>
 		</div>
 	</footer>
 
