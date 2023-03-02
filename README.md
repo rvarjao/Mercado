@@ -60,7 +60,7 @@ Requisitos do sistema
 
 Banco de dados
 ===============
-O banco de dados escolhido foi o Postgres, a estrutura do banco de dados pode ser visto no arquivo **dump.sql**
+O banco de dados escolhido foi o Postgres, a estrutura do banco de dados pode ser visto no arquivo: [Dump do banco de dados](Projeto/dump.sql)
 
 Modelo
 --
@@ -70,3 +70,27 @@ Modelo
 Diagrama de Classe
 ===================
 ![Diagrama de classes](README/diagramaClasse.png "Diagrama de classes")
+
+
+Configurações
+===================
+Deve-se completar o arquivo **settings.php** com as configurações do banco de dados local. Por exemplo:
+
+```
+return [
+    'NAME' => 'My Website',
+    'DATABASE' => [
+        'PASSWORD' => 'postgres',
+        'USER' => 'postgres',
+        'NAME' => 'market',
+        'HOST' => 'localhost',
+        'POST' => '5432',
+    ]
+];
+```
+
+O servidor deve ser iniciado a partir da pasta **public**
+
+```
+php -S localhost:8080
+```
