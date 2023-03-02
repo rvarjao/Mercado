@@ -15,6 +15,8 @@ class SaleProduct implements ModelInterface
     public $sale_id;
     public $product_price_id;
     public $amount;
+    public $productPrice;
+    public $productTypeTax;
     protected $db;
 
     public function __construct(PDO $db)
@@ -92,6 +94,53 @@ class SaleProduct implements ModelInterface
     public static function where($where, $params = [])
     {
         throw new MarketException('Not implemented');
+    }
+
+    public function loadProductPrice()
+    {
+        $connection = $this->db;
+        $query =
+            "SELECT
+                product_price.id,
+                product_price.product_id,
+                product_price.price,
+                product_price.created_at
+            FROM
+                product_price
+            WHERE
+                product_price.id = :product_price_id";
+        $stmt = $connection->prepare($query);
+        $stmt->bindParam(':product_price_id', $this->product_price_id);
+        $stmt->execute();
+        $productPrice = $stmt->fetchObject('Model\Market\ProductPrice', [$connection]);
+        if ($productPrice) {
+            $this->productPrice = $productPrice->loadProduct();
+        }
+        return $productPrice;
+    }
+
+    public function loadProductTypeTax()
+    {
+        $connection = $this->db;
+        $query =
+            "SELECT
+                product_type_tax.id,
+                product_type_tax.product_type_id,
+                product_type_tax.tax,
+                product_type_tax.created_at
+            FROM
+                product_type_tax
+            WHERE
+                product_type_tax.id = :product_type_tax_id";
+        $stmt = $connection->prepare($query);
+        $stmt->bindParam(':product_type_tax_id', $this->product_type_tax_id);
+        $stmt->execute();
+        $productTypeTax = $stmt->fetchObject('Model\Market\ProductTypeTax', [$connection]);
+        if ($productTypeTax) {
+            $productTypeTax->loadProductType();
+        }
+        $this->productTypeTax = $productTypeTax;
+        return $productTypeTax;
     }
 
 }

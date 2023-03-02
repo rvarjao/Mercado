@@ -17,6 +17,8 @@ class ProductPrice implements ModelInterface
     public $price;
     public $created_at;
 
+    public $product;
+
     public function __construct(PDO $db)
     {
         $this->db = $db;
@@ -145,6 +147,16 @@ class ProductPrice implements ModelInterface
         $priceModel->price = $price['price'];
         $priceModel->created_at = $price['created_at'];
         return $priceModel;
+    }
+
+    public function loadProduct()
+    {
+        $product = Product::load($this->product_id);
+        if (!$product || empty($product)) {
+            return null;
+        }
+        $this->product = $product;
+        return $this;
     }
 
 }

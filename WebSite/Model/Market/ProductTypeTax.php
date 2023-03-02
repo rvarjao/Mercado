@@ -16,6 +16,7 @@ class ProductTypeTax implements ModelInterface
     public $product_type_id;
     public $tax;
     public $created_at;
+    public $productType;
 
     public function __construct(PDO $db)
     {
@@ -140,6 +141,11 @@ class ProductTypeTax implements ModelInterface
     public static function where($where, $params = [])
     {
         // TODO: Implement where() method.
+    }
+
+    public function loadProductType()
+    {
+        $this->productType = ProductType::load($this->product_type_id);
     }
 
 }

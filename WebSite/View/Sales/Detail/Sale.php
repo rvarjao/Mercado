@@ -10,6 +10,7 @@ class Sale implements View
 {
 	public function render($data = null): string
 	{
+
 		$db = new Database();
 		$connection = $db->getConnection();
 		$saleId = $data['id'] ?? $data['sale_id'] ?? null;
@@ -19,11 +20,13 @@ class Sale implements View
 			$sale = new MarketSale($connection);
 		}
 
-		$salesProducts = $sale->findProducts();
+		$sale->loadProducts();
+		$salesProducts = $sale->products;
+
 		$trs = "";
 		foreach ($salesProducts as $saleProduct) {
-			$tableRow = new TableRow($saleProduct);
-			$trs .= $tableRow->render();
+			$tableRow = new TableRow();
+			$trs .= $tableRow->render($saleProduct);
 		}
 
 

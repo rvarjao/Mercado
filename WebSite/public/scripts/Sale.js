@@ -22,12 +22,28 @@ class Sale {
 
 class SalesView {
     static init() {
-        loadView('sales/index');
+        loadView('sales/index')
+            .then((data) => {
+                const table = document.getElementById('sales');
+                const tbody = table.querySelector('tbody');
+                const trs = tbody.querySelectorAll('tr');
+                trs.forEach((tr) => {
+                    tr.addEventListener('click', () => SalesView.openSaleView(tr));
+                    tr.style.cursor = 'pointer';
+                });
+            });
     }
 
-    static openNewSaleView() {
-        loadView('sales/new');
+    static openSaleView(tr) {
+        const id = tr.dataset.id;
+        const data = new FormData();
+        data.append('id', id);
+        loadView('sales/detail/sale', data)
+            .then((data) => {
+                SaleView.updateTotals();
+            });
     }
+
 
     static loadNewSaleView() {
         loadView('sales/detail/sale');
@@ -45,23 +61,23 @@ class SaleView {
 
     static addRow() {
         System.loadView('sales/detail/tableRow')
-        .then((data) => {
-            const table = document.getElementById('tableSaleProducts');
+            .then((data) => {
+                const table = document.getElementById('tableSaleProducts');
 
-            const tbody = table.querySelector('tbody');
-            tbody.insertAdjacentHTML('beforeend', data);
+                const tbody = table.querySelector('tbody');
+                tbody.insertAdjacentHTML('beforeend', data);
 
-            const row = tbody.lastElementChild;
+                const row = tbody.lastElementChild;
 
-            const productSelector = row.querySelector('select');
-            productSelector.addEventListener('change', () => SaleView.updateRow(row));
+                const productSelector = row.querySelector('select');
+                productSelector.addEventListener('change', () => SaleView.updateRow(row));
 
-            const inputAmount = row.querySelector('input[name="amount[]"]');
-            inputAmount.addEventListener('input', () => SaleView.updateTotals(row));
+                const inputAmount = row.querySelector('input[name="amount[]"]');
+                inputAmount.addEventListener('input', () => SaleView.updateTotals(row));
 
-            SaleView.updateRow(row);
+                SaleView.updateRow(row);
 
-        });
+            });
     }
 
     static updateRow(tr) {
@@ -90,33 +106,33 @@ class SaleView {
         fetch(url, {
             method: 'GET',
         })
-        .then((response) => response.json())
-        .then((product) => {
-            const inputPriceId = tr.querySelector('input[name="product_price_id[]"]');
-            const inputTypeTaxId = tr.querySelector('input[name="product_type_tax_id[]"]');
-            const inputPrice = tr.querySelector('input[name="price[]"]');
-            const inputTypeTax = tr.querySelector('input[name="product_type_tax[]"]');
-            const inputType = tr.querySelector('input[name="product_type[]"]');
+            .then((response) => response.json())
+            .then((product) => {
+                const inputPriceId = tr.querySelector('input[name="product_price_id[]"]');
+                const inputTypeTaxId = tr.querySelector('input[name="product_type_tax_id[]"]');
+                const inputPrice = tr.querySelector('input[name="price[]"]');
+                const inputTypeTax = tr.querySelector('input[name="product_type_tax[]"]');
+                const inputType = tr.querySelector('input[name="product_type[]"]');
 
-            if (product.productPrice) {
-                inputPriceId.value = product.productPrice.id;
-                inputPrice.value = product.productPrice.price;
-            }
+                if (product.productPrice) {
+                    inputPriceId.value = product.productPrice.id;
+                    inputPrice.value = product.productPrice.price;
+                }
 
-            if (product.productTypeTax) {
-                inputTypeTaxId.value = product.productTypeTax.id;
-                inputTypeTax.value = product.productTypeTax.tax;
-            }
+                if (product.productTypeTax) {
+                    inputTypeTaxId.value = product.productTypeTax.id;
+                    inputTypeTax.value = product.productTypeTax.tax;
+                }
 
-            if (product.productType) {
-                inputType.value = product.productType.name;
-            }
+                if (product.productType) {
+                    inputType.value = product.productType.name;
+                }
 
-            SaleView.updateTotals();
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+                SaleView.updateTotals();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
 
     }
 
@@ -165,18 +181,18 @@ class SaleView {
         const form = document.getElementById('formSale');
         const formData = new FormData(form);
         Sale.save(formData)
-        .then((data) => {
+            .then((data) => {
 
-            if (!data.success) {
-                alert(data.message);
-                return;
-            }
+                if (!data.success) {
+                    alert(data.message);
+                    return;
+                }
 
-            SalesView.init();
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+                SalesView.init();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
 
 
     }

@@ -17,7 +17,7 @@ class TableRow implements View
         $total = number_format($data['total'], 2, ',', '.');
 
         return <<<HTML
-            <tr dataset-id="{$data['id']}">
+            <tr data-id="{$data['id']}">
                 <td>
                     {$data['created_at']}
                 </td>

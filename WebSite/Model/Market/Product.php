@@ -80,11 +80,6 @@ class Product implements ModelInterface
     public static function load($id)
     {
         $product = Product::find($id);
-
-        if (!$product) {
-            return null;
-        }
-
         $database = new Database();
         $connection = $database->getConnection();
         $productModel = new Product($connection);

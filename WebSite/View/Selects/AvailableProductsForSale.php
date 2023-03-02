@@ -9,6 +9,7 @@ class AvailableProductsForSale implements View
 {
     public $showLabel = true;
     public $name = 'productId';
+    public $value = null;
 
     public function render($data = null): string
     {
@@ -18,7 +19,8 @@ class AvailableProductsForSale implements View
         $optionsProducts = "<option value=0>Selecione um produto</option>";
 
         foreach ($products as $product) {
-            $optionsProducts .= "<option value='{$product['id']}'>{$product['name']}</option>";
+            $selected = $this->value == $product['id'] ? 'selected' : '';
+            $optionsProducts .= "<option value='{$product['id']}' $selected>{$product['name']}</option>";
         }
 
         if (!$this->showLabel) {

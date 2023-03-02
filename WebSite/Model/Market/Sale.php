@@ -14,7 +14,7 @@ class Sale implements ModelInterface
 
     public $id;
     public $createdAt;
-
+    public $products;
 
     public function __construct(PDO $db)
     {
@@ -73,7 +73,22 @@ class Sale implements ModelInterface
 
     public static function find($id)
     {
-        throw new MarketException("Not implemented yet", 1);
+        $db = new Database();
+        $connection = $db->getConnection();
+
+        $query =
+            "SELECT
+                s.id,
+                s.created_at
+            FROM
+                sale s
+            WHERE
+                s.id = :id";
+
+        $stmt = $connection->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetchObject('Model\Market\Sale', [$connection]);
     }
 
     public static function findAll()
@@ -133,7 +148,7 @@ class Sale implements ModelInterface
         JOIN
             product_type ON product_type.id = product.product_type_id
         JOIN
-            product_tax ON product_tax.id = product_price.product_tax_id
+            product_type_tax ON product_type_tax.id = sale_product.product_type_tax_id
         WHERE
             sale_product.sale_id = :sale_id";
 
@@ -142,6 +157,29 @@ class Sale implements ModelInterface
         $stmt->execute();
         return $stmt->fetchAll();
 
+    }
+
+    public function loadProducts()
+    {
+        if (!$this->id) {
+            return [];
+        }
+
+        $query =
+        "SELECT
+            *
+        FROM
+            sale_product
+        WHERE
+            sale_product.sale_id = :sale_id
+        ";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':sale_id' => $this->id]);
+        $this->products = [];
+        while ($product = $stmt->fetchObject('Model\Market\SaleProduct', [$this->db])) {
+            $this->products[] = $product;
+        }
+        return $this->products;
     }
 
     public function addProduct(Product $product, $amount = 1)

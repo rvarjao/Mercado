@@ -16,4 +16,4 @@ $viewName = implode('\\', $parts);
 $viewClass = "View\\$viewName";
 
 $view = new $viewClass();
-echo $view->render();
+echo $view->render($_POST);
