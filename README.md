@@ -55,7 +55,7 @@ Requisitos do sistema
    12. Ao buscar o valor do item deve ser sempre considerado o horário de fechamento da venda.
    13. O layout geral deve seguir o da imagem:
 
-   ![Layout tela de vendas](README/../../Projeto/Mockup/TelaVendas.png "Layout tela de vendas")
+   ![Layout tela de vendas](README/TelaVendas.png "Layout tela de vendas")
 
 
 Banco de dados
