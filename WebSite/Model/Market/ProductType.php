@@ -75,4 +75,18 @@ class ProductType implements ModelInterface
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public static function load($productTypeId)
+    {
+        $productType = ProductType::find($productTypeId);
+        if (!$productType) {
+            return null;
+        }
+        $database = new Database();
+        $connection = $database->getConnection();
+        $productTypeModel = new ProductType($connection);
+        $productTypeModel->id = $productType['id'];
+        $productTypeModel->name = $productType['name'];
+        return $productTypeModel;
+    }
 }

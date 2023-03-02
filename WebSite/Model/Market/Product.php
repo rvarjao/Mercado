@@ -16,6 +16,7 @@ class Product implements ModelInterface
     public $product_type_id;
     public $productPrice;
     public $productTypeTax;
+    public $productType;
 
     public function __construct(PDO $db)
     {
@@ -73,12 +74,17 @@ class Product implements ModelInterface
     public static function find($id)
     {
         $product = Product::where('product.id = :id', [':id' => $id]);
-        return $product[0];
+        return $product[0] ?? null;
     }
 
     public static function load($id)
     {
         $product = Product::find($id);
+
+        if (!$product) {
+            return null;
+        }
+
         $database = new Database();
         $connection = $database->getConnection();
         $productModel = new Product($connection);
@@ -102,7 +108,7 @@ class Product implements ModelInterface
                 product
             JOIN
                 product_type ON product_type.id = product.product_type_id
-            ORDER BY product.name";
+            ORDER BY product_type.name, product.name";
         $stmt = $connection->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -125,7 +131,7 @@ class Product implements ModelInterface
             JOIN
                 product_type ON product_type.id = product.product_type_id
             $where
-            ORDER BY product.name";
+            ORDER BY product_type.name, product.name";
         $stmt = $connection->prepare($query);
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -157,7 +163,7 @@ class Product implements ModelInterface
                 AND
                     product_price.price > 0)
             $whereID
-            ORDER BY product.name";
+            ORDER BY product_type.name, product.name";
 
         $stmt = $connection->prepare($query);
         $stmt->execute();
@@ -173,6 +179,11 @@ class Product implements ModelInterface
     public function loadProductTypeTax()
     {
         $this->productTypeTax = ProductTypeTax::loadCurrentTax($this->product_type_id);
+    }
+
+    public function loadProductType()
+    {
+        $this->productType = ProductType::load($this->product_type_id);
     }
 
 }

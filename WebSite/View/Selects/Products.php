@@ -10,7 +10,8 @@ class Products implements View
     public function render($data = null): string
     {
         $products = Product::findAll();
-        $optionsProducts = "<option>Selecione um produto</option>";
+        $optionsProducts = "<option value=0>Selecione um produto</option>";
+
         foreach ($products as $product) {
             $optionsProducts .= "<option value='{$product['id']}'>{$product['name']}</option>";
         }

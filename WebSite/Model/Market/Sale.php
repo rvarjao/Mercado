@@ -23,7 +23,47 @@ class Sale implements ModelInterface
 
     public function save()
     {
-        throw new MarketException("Not implemented yet", 1);
+        if ($this->id) {
+            return $this->update();
+        }
+        return $this->create();
+    }
+
+    public function create()
+    {
+        $connection = $this->db;
+        $query =
+            "INSERT INTO
+                sale (created_at)
+                VALUES (?)";
+
+        $stmt = $connection->prepare($query);
+        $createdAt = $this->createdAt ? $this->createdAt : date('Y-m-d H:i:s O');
+        $stmt->execute([$createdAt]);
+        $this->id = $connection->lastInsertId();
+        $this->createdAt = $createdAt;
+        return $stmt;
+    }
+
+    public function update()
+    {
+        if (!$this->id) {
+            throw new MarketException("Id da venda não encontrado.", 1);
+        }
+
+        $connection = $this->db;
+        $query =
+            "UPDATE
+                sale
+            SET
+                created_at = :created_at
+            WHERE
+                id = :id";
+        $stmt = $connection->prepare($query);
+        $stmt->bindParam(':created_at', $this->createdAt);
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
+        return $stmt;
     }
 
     public function delete()
@@ -43,17 +83,22 @@ class Sale implements ModelInterface
 
     public static function findSummary($id = null)
     {
+        $where = $id ? "WHERE s.id = :id" : "";
+
         $query =
             "SELECT
             s.id,
             s.created_at,
-            sum(pp.price) AS total
+            sum(pp.price * amount + (ptt.tax / 100) * pp.price * amount) AS total
         FROM
             sale s
         LEFT JOIN
             sale_product sp ON sp.sale_id = s.id
         LEFT JOIN
             product_price pp ON pp.id = sp.product_price_id
+        LEFT JOIN
+            product_type_tax ptt ON ptt.id = sp.product_type_tax_id
+        $where
         GROUP BY
             s.id,
             s.created_at";
@@ -70,7 +115,7 @@ class Sale implements ModelInterface
         throw new MarketException("Not implemented yet", 1);
     }
 
-    public function getSaleItems()
+    public function findProducts()
     {
         if (!$this->id) {
             return [];
@@ -97,6 +142,27 @@ class Sale implements ModelInterface
         $stmt->execute();
         return $stmt->fetchAll();
 
+    }
+
+    public function addProduct(Product $product, $amount = 1)
+    {
+        if (!$this->id) {
+            $this->save();
+        }
+
+        $productPrice = ProductPrice::loadCurrentPrice($product->id);
+        $productTypeTax = ProductTypeTax::loadCurrentTax($product->product_type_id);
+
+        $saleProduct = new SaleProduct($this->db);
+        $saleProduct->product_price_id = $productPrice->id;
+
+        if ($productTypeTax) {
+            $saleProduct->product_type_tax_id = $productTypeTax->id;
+        }
+
+        $saleProduct->sale_id = $this->id;
+        $saleProduct->amount = $amount;
+        $saleProduct->save();
     }
 
 }

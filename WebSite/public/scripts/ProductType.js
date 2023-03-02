@@ -23,16 +23,7 @@ class ProductType {
 
 class ProductTypeView {
     static init() {
-        loadView('productTypes/index').
-            then(() => {
-                ;
-                const form = document.getElementById('formProductType');
-                form.addEventListener('submit', (event) => {
-                    event.preventDefault();
-                    ProductType.submitForm(event);
-                })
-            });
-
+        loadView('productTypes/index');
     }
 
     static saveProductType() {
@@ -43,7 +34,7 @@ class ProductTypeView {
             if (data.success === true) {
                 const modal = document.getElementById('modal-newProductType');
                 closeModal(modal);
-                System.loadView('productTypes/index');
+                loadView('productTypes/index');
             } else {
                 alert('Erro ao salvar o tipo de produto');
             }

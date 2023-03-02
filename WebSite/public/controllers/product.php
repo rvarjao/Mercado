@@ -35,6 +35,7 @@ if ($method == 'GET') {
     $product = Product::load($id);
     $product->loadProductPrice();
     $product->loadProductTypeTax();
+    $product->loadProductType();
 
     echo json_encode($product);
 }

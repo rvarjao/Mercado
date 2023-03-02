@@ -13,13 +13,16 @@ class TableRow implements View
             'created_at' => '',
             'total' => '',
         ];
+
+        $total = number_format($data['total'], 2, ',', '.');
+
         return <<<HTML
             <tr dataset-id="{$data['id']}">
                 <td>
                     {$data['created_at']}
                 </td>
                 <td>
-                    {$data['total']}
+                    {$total}
                 </td>
             </tr>
 HTML;

@@ -10,7 +10,8 @@ class ProductTypes implements View
     public function render($data = null): string
     {
         $productTypes = ProductType::findAll();
-        $optionsProducts = "<option>Selecione um tipo de produto</option>";
+        $optionsProducts = "<option value=0>Selecione um tipo de produto</option>";
+
         foreach ($productTypes as $productType) {
             $optionsProducts .= "<option value='{$productType['id']}'>{$productType['name']}</option>";
         }
